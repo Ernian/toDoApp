@@ -22,3 +22,12 @@ body {
   color: #ff4d4f;
   transition: 0.3s;
 }
+
+.message {
+  margin: 10px 0px;
+  padding: 10px 15px;
+  font-size: 20px;
+  background-color: #fff;
+  border-radius: 15px;
+  list-style: none;
+}

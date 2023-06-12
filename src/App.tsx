@@ -2,20 +2,20 @@ import { useState } from 'react'
 import { Col, Radio, Row } from 'antd'
 import { SmileOutlined } from '@ant-design/icons'
 import type { RadioChangeEvent } from 'antd'
-import Input from './components/input'
+import Form from './components/form'
 import Task from './components/task'
 import { ITask, Filters } from './types'
 
 const options = [
   { label: 'All', value: 'all' },
+  { label: 'Active', value: 'incompleted' },
   { label: 'Completed', value: 'completed' },
-  { label: 'Incompleted', value: 'incompleted' },
 ]
 
 const emptyListMessages = {
-  all: <h2>List of tasks is empty</h2>,
-  completed: <h2>List of completed tasks is empty</h2>,
-  incompleted: <h2>All done! <SmileOutlined /></h2>,
+  all: <li className='message'>List of tasks is empty</li>,
+  completed: <li className='message'>List of completed tasks is empty</li>,
+  incompleted: <li className='message'>All done! <SmileOutlined /></li>,
 }
 
 function App() {
@@ -66,7 +66,7 @@ function App() {
         lg={{ span: 8, offset: 8 }}
       >
         <h1 style={{ textAlign: 'center' }}>Todo list</h1>
-        <Input addTask={setTasks} />
+        <Form addTask={setTasks} />
         <Radio.Group
           options={options}
           value={filter}
@@ -75,13 +75,13 @@ function App() {
           buttonStyle="solid"
           style={{ marginTop: 15 }}
         />
-        <div>
+        <ul style={{ padding: 0 }}>
           {
             filteredTasksJSX.length ?
               filteredTasksJSX :
               emptyListMessages[filter]
           }
-        </div>
+        </ul>
       </Col>
     </Row>
   )

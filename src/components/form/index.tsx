@@ -1,9 +1,9 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
-import { Button, Form, Input as AntInput, notification, Space } from 'antd'
+import { Button, Form as AntForm, Input, notification, Space } from 'antd'
 import { v4 as uuidv4 } from 'uuid'
 import { ITask } from '../../types'
 
-const Input = ({ addTask }: { addTask: Dispatch<SetStateAction<ITask[]>> }) => {
+const Form = ({ addTask }: { addTask: Dispatch<SetStateAction<ITask[]>> }) => {
   const [title, setTitle] = useState<string>('')
   const [api, contextHolder] = notification.useNotification()
 
@@ -27,10 +27,10 @@ const Input = ({ addTask }: { addTask: Dispatch<SetStateAction<ITask[]>> }) => {
   }
 
   return (
-    <Form onFinish={submitHandler}>
+    <AntForm onFinish={submitHandler} role='form'>
       <Space.Compact style={{ width: '100%' }}>
         {contextHolder}
-        <AntInput
+        <Input
           placeholder='Task to do'
           value={title}
           onChange={inputHandler}
@@ -42,8 +42,8 @@ const Input = ({ addTask }: { addTask: Dispatch<SetStateAction<ITask[]>> }) => {
           Add
         </Button>
       </Space.Compact >
-    </Form>
+    </AntForm>
   )
 }
 
-export default Input
+export default Form

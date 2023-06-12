@@ -33,12 +33,12 @@ const Task = ({
   }
 
   return (
-    <div className='task'>
+    <li className='task'>
       <Checkbox onChange={changeComplete} checked={complete}>
         <Text type={complete ? 'success' : undefined}>{title}</Text>
       </Checkbox>
       <DeleteOutlined className='delete-icon' onClick={deleteTask} />
-    </div>
+    </li>
   )
 }
 
