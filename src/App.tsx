@@ -1,10 +1,8 @@
-import { useState } from 'react'
 import { Col, Radio, Row } from 'antd'
 import { SmileOutlined } from '@ant-design/icons'
-import type { RadioChangeEvent } from 'antd'
 import Form from './components/form'
 import Task from './components/task'
-import { ITask, Filters } from './types'
+import { useToDo } from './hook/useToDo'
 
 const options = [
   { label: 'All', value: 'all' },
@@ -19,43 +17,7 @@ const emptyListMessages = {
 }
 
 function App() {
-  const [tasks, setTasks] = useState<ITask[]>([])
-  const [filter, setFilter] = useState<Filters>('all')
-
-  const changeFilter = ({ target: { value } }: RadioChangeEvent) => {
-    setFilter(value)
-  }
-
-  const filteredTasksJSX = tasks.reduce((filteredTasks, task) => {
-    if (filter === 'all') {
-      filteredTasks.push(<Task
-        key={task.id}
-        {...task}
-        tasks={tasks}
-        changeTasks={setTasks}
-      />)
-      return filteredTasks
-    }
-    if (filter === 'completed' && task.complete) {
-      filteredTasks.push(<Task
-        key={task.id}
-        {...task}
-        tasks={tasks}
-        changeTasks={setTasks}
-      />)
-      return filteredTasks
-    }
-    if (filter === 'incompleted' && !task.complete) {
-      filteredTasks.push(<Task
-        key={task.id}
-        {...task}
-        tasks={tasks}
-        changeTasks={setTasks}
-      />)
-      return filteredTasks
-    }
-    return filteredTasks
-  }, [] as JSX.Element[])
+  const { tasks, setTasks, filteredTasks, filter, changeFilter } = useToDo()
 
   return (
     <Row>
@@ -77,8 +39,14 @@ function App() {
         />
         <ul style={{ padding: 0 }}>
           {
-            filteredTasksJSX.length ?
-              filteredTasksJSX :
+            filteredTasks.length ?
+              filteredTasks.map(task => (
+                <Task
+                  key={task.id}
+                  {...task}
+                  tasks={tasks}
+                  changeTasks={setTasks}
+                />)) :
               emptyListMessages[filter]
           }
         </ul>
